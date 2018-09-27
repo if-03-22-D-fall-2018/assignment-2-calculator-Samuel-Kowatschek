@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <float.h>
 
 int GetOperation(){
   int operationNumber;
@@ -34,11 +35,53 @@ void TurnOperationNumberIntoOperation(int operationNumber, char *operation){
     scanf("%lf",secondOperand);
   }
 
+void PerformOperation(double firstOperand, double secondOperand, char operation, double *result){
+  switch (operation){
+    case '+':
+      if(firstOperand+secondOperand<=DBL_MAX){
+        *result=firstOperand+secondOperand;
+      }else{
+        printf("Number overflow\n");
+      }
+      break;
+    case '-':
+      if(firstOperand-secondOperand>=DBL_MIN){
+          *result=firstOperand-secondOperand;
+      }else{
+        printf("Number underflow\n");
+      }
+
+      break;
+    case '*':
+      if(firstOperand*secondOperand<=DBL_MAX&&firstOperand*secondOperand>=DBL_MIN){
+        *result=firstOperand*secondOperand;
+      }else if(firstOperand*secondOperand>DBL_MAX){
+        printf("Number overflow\n");
+      }else{
+        printf("Number underflow\n");
+      }
+      break;
+
+    case '/':
+      if(secondOperand!=0&&firstOperand/secondOperand<=DBL_MAX&&firstOperand/secondOperand>=DBL_MIN){
+        *result=firstOperand/secondOperand;
+      }else if(secondOperand==0){
+        printf("Division by 0\n");
+      }else if(firstOperand/secondOperand>DBL_MAX){
+        printf("Number overflow\n");
+      }else{
+        printf("Number underflow\n");
+      }
+      break;
+  }
+}
+
 int main(int argc, char *argv[]){
   int operationNumber;
   char operation;
   double firstOperand;
   double secondOperand;
+  double result;
   bool isNotAllowed=false;
   bool shouldEnd=false;
   do{
@@ -54,6 +97,7 @@ int main(int argc, char *argv[]){
   if(!shouldEnd){
     GetOperands(&firstOperand, &secondOperand);
     TurnOperationNumberIntoOperation(operationNumber, &operation);
+    PerformOperation(firstOperand, secondOperand, operation, &result);
   }
   return 0;
 
