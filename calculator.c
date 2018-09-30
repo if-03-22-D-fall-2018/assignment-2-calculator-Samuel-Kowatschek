@@ -1,3 +1,20 @@
+/*----------------------------------------------------------
+ *				HTBLA-Leonding / Class: 2DHIF
+ * ---------------------------------------------------------
+ * Exercise Number: 02
+ * Title:			Pocketcalculator
+ * Author:			Kowatschek Samuel
+ * ----------------------------------------------------------
+ * Description:
+ * The user enters 2 numbers and an operation (+, -, *, /).
+ *The program calulates the result and outputs it, it also checks if
+ *the number is valid (no division by 0, underflow and overflow error)
+ *
+ *Note: DBL_MIN was 0 in my case, I don't know why this was the case, so
+ *I just used -DBL_MAX instead of it. I hope this is okay but otherwise no
+ *negative numbers would've been in the valid area. 
+ */
+
 #include <stdio.h>
 #include <stdbool.h>
 #include <float.h>
@@ -35,10 +52,10 @@ void TurnOperationNumberIntoOperation(int operationNumber, char *operation){
     scanf("%lf",secondOperand);
   }
 
-void PerformOperation(double firstOperand, double secondOperand, char operation, double *result){
+bool PerformOperation(double firstOperand, double secondOperand, char operation, double *result){
   switch (operation){
     case '+':
-      if(firstOperand+secondOperand<=DBL_MAX && firstOperand+secondOperand>=DBL_MIN){
+      if(firstOperand+secondOperand<=DBL_MAX && firstOperand+secondOperand>=-DBL_MAX){
         *result=firstOperand+secondOperand;
       }else if(firstOperand+secondOperand<=DBL_MAX){
         printf("Number overflow\n");
@@ -49,9 +66,9 @@ void PerformOperation(double firstOperand, double secondOperand, char operation,
       }
       break;
     case '-':
-      if(firstOperand-secondOperand>=DBL_MIN&&firstOperand-secondOperand<=DBL_MAX){
+      if(firstOperand-secondOperand>=-DBL_MAX&&firstOperand-secondOperand<=DBL_MAX){
           *result=firstOperand-secondOperand;
-      }else if (firstOperand-secondOperand<=DBL_MAX) {
+      }else if (firstOperand-secondOperand>=DBL_MAX) {
         printf("Number overflow\n");
         return false;
       }
@@ -62,7 +79,7 @@ void PerformOperation(double firstOperand, double secondOperand, char operation,
 
       break;
     case '*':
-      if(firstOperand*secondOperand<=DBL_MAX&&firstOperand*secondOperand>=DBL_MIN){
+      if(firstOperand*secondOperand<=DBL_MAX&&firstOperand*secondOperand>=-DBL_MAX){
         *result=firstOperand*secondOperand;
       }else if(firstOperand*secondOperand>DBL_MAX){
         printf("Number overflow\n");
@@ -74,7 +91,7 @@ void PerformOperation(double firstOperand, double secondOperand, char operation,
       break;
 
     case '/':
-      if(secondOperand!=0&&firstOperand/secondOperand<=DBL_MAX&&firstOperand/secondOperand>=DBL_MIN){
+      if(secondOperand!=0&&firstOperand/secondOperand<=DBL_MAX&&firstOperand/secondOperand>=-DBL_MAX){
         *result=firstOperand/secondOperand;
       }else if(secondOperand==0){
         printf("Division by 0\n");
