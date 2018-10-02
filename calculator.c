@@ -12,7 +12,8 @@
  *
  *Note: DBL_MIN was 0 in my case, I don't know why this was the case, so
  *I just used -DBL_MAX instead of it. I hope this is okay but otherwise no
- *negative numbers would've been in the valid area. 
+ *negative numbers would've been in the valid area.
+  ----------------------------------------------------------
  */
 
 #include <stdio.h>
