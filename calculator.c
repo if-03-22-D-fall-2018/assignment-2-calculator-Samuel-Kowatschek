@@ -56,7 +56,7 @@ void TurnOperationNumberIntoOperation(int operationNumber, char *operation){
 bool PerformOperation(double firstOperand, double secondOperand, char operation, double *result){
   switch (operation){
     case '+':
-      if(firstOperand+secondOperand<=DBL_MAX && firstOperand+secondOperand>=-DBL_MAX){
+      if(firstOperand+secondOperand<=DBL_MAX && firstOperand+secondOperand>=DBL_MIN){
         *result=firstOperand+secondOperand;
       }else if(firstOperand+secondOperand<=DBL_MAX){
         printf("Number overflow\n");
@@ -67,7 +67,7 @@ bool PerformOperation(double firstOperand, double secondOperand, char operation,
       }
       break;
     case '-':
-      if(firstOperand-secondOperand>=-DBL_MAX&&firstOperand-secondOperand<=DBL_MAX){
+      if(firstOperand-secondOperand>=DBL_MIN&&firstOperand-secondOperand<=DBL_MAX){
           *result=firstOperand-secondOperand;
       }else if (firstOperand-secondOperand>=DBL_MAX) {
         printf("Number overflow\n");
@@ -80,7 +80,7 @@ bool PerformOperation(double firstOperand, double secondOperand, char operation,
 
       break;
     case '*':
-      if(firstOperand*secondOperand<=DBL_MAX&&firstOperand*secondOperand>=-DBL_MAX){
+      if(firstOperand*secondOperand<=DBL_MAX&&firstOperand*secondOperand>=DBL_MIN){
         *result=firstOperand*secondOperand;
       }else if(firstOperand*secondOperand>DBL_MAX){
         printf("Number overflow\n");
@@ -92,7 +92,7 @@ bool PerformOperation(double firstOperand, double secondOperand, char operation,
       break;
 
     case '/':
-      if(secondOperand!=0&&firstOperand/secondOperand<=DBL_MAX&&firstOperand/secondOperand>=-DBL_MAX){
+      if(secondOperand!=0&&firstOperand/secondOperand<=DBL_MAX&&firstOperand/secondOperand>=DBL_MIN){
         *result=firstOperand/secondOperand;
       }else if(secondOperand==0){
         printf("Division by 0\n");
